@@ -1,0 +1,12 @@
+{% extends 'client.html.twig' %}
+
+{% block title %}Modfier Ticket{% endblock %}
+
+{% block body %}
+    <h1>Modifier Ticket</h1>
+
+    {{ include('client/ticket/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+    {{ include('client/ticket/_delete_form.html.twig') }}
+{% endblock %}

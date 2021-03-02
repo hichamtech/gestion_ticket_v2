@@ -1,0 +1,84 @@
+{% extends 'client.html.twig' %}
+
+{% block title %}Mes Tickets{% endblock %}
+
+{% block body %}
+<section id="main">
+    <div class="dashboard" id="dashboard">
+        <div class="row mt-5">
+
+            <div class="col-md-12">
+                <div class="card ">
+                    <h5 class="card-title" style="text-align: center;font-weight: bold;"> Mes Tickets</h5>
+                    <div class="card-body align-items-center mt-3">
+
+                        <div class="form-row mb-3">
+
+                        
+                        </div>
+                        <table class="table" style="margin-top:20px;">
+                            <thead>
+                                <tr>
+                                      <th>Id</th>
+                                      <th>Statut</th>
+                                      <th>Etat</th>
+                                      <th>Titre</th>
+                                       <th>lieu</th>
+                                      <th>Date</th>
+                                      <th>Priorite</th>
+                                      <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for ticket in tickets %}
+                              
+
+                                    <tr>
+                                    {% set colorStatut = ticket.status == 0 ? 'danger' : 'success' %}  
+                                    {% set colorPriorité = ticket.priorite  ==  "Très Haute" ? 'danger' : ticket.priorite  ==  "Haute" ? 'warning' :   
+                                                                                ticket.priorite  ==  "primary" ? '#ff6600' :  "success" 
+                                    
+                                                                                    %}  
+                                    {% set colorEtat = ticket.etat == 0 ? 'danger' : 'success' %}  
+                                        <td>{{ ticket.id }}</td>
+                                        <td style="background: {{ colorStatut }};color:white;"><span class="badge bg-{{colorStatut}}">{{ ticket.status ? 'Terminé' : 'En cours' }}</span> </td>
+                                        <td><span class="badge bg-{{colorEtat}}">{{ ticket.etat ? 'Valider' : 'Non Valider' }}</span> </td>
+
+                                         <td>{{ ticket.titre }}</td>
+                                       
+                                        <td>{{ ticket.lieu }}</td>
+                                        <td>{{ ticket.date ? ticket.date|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td >  <span class="badge bg-{{colorPriorité}}">{{ ticket.priorite }}</span></td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                     <a href="{{ path('ticket_edit', {'id': ticket.id}) }}" class="btn btn-warning btn-sm btn-icon icon-left text-light"> Éditer</a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                <a href="{{ path('ticket_delete', {'id': ticket.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left text-light"> Supprimer</a>
+                                                </div>
+                            
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                {% else %}
+                                 <tr>
+                                <td colspan="7">aucun ticket </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="row mt-3">
+                        <div class="col-md-2">
+                        <a  class="btn btn-success " href="{{ path('ticket_new') }}" >Nouveau Ticket</a>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

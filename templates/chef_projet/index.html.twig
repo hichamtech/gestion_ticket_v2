@@ -1,0 +1,100 @@
+{% extends 'chef_projet.html.twig' %}
+
+{% block title %} Tickets{% endblock %}
+
+{% block body %}
+<section id="main">
+    <div class="dashboard" id="dashboard">
+        <div class="row mt-5">
+
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-body align-items-center mt-3">
+
+                        <div class="form-row mb-3">
+
+                        </div>
+                        <table class="table" style="margin-top:20px;">
+                            <thead>
+                                <tr>
+                                      <th>ID</th>
+                                      <th>-Statut-</th>
+                                      <th>-Etat-</th>
+                                      <th>Titre</th>
+                                      <th>Technicien</th>
+                                       <th>Demandeur</th>
+                                       <th>Lieu</th>
+                                       <th>-Date-</th>
+                                      <th>Priorité</th>
+                                      
+                                     
+                                      
+                                        <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for ticket in tickets %}
+                              
+
+                                    <tr>
+                                    {% set colorEtat = ticket.etat == 0 ? 'danger' : 'success' %}  
+                                      {% set colorStatut = ticket.status == 0 ? 'danger' : 'success' %}  
+                                    {% set colorPriorité = ticket.priorite  ==  "Très Haute" ? 'danger' : ticket.priorite  ==  "Haute" ? 'warning' :   
+                                                                                ticket.priorite  ==  "primary" ? '#ff6600' :  "success" 
+                                    
+                                                                                    %}  
+
+                                        
+                                        <td>{{ ticket.id }}</td>
+                                        <td style="background: {{ colorStatut }};color:white;"><span class="badge bg-{{colorStatut}}">{{ ticket.status ? 'Terminé' : 'En cours' }}</span> </td>
+                                         <td><span class="badge bg-{{colorEtat}}">{{ ticket.etat ? 'Valider' : 'Non Valider' }}</span> </td>
+                                         <td >{{ ticket.titre }}</td>
+                                          {% if ticket.technicien is null %}
+                                         <td><span class="badge bg-warning">Non assigné</span></td>
+                                        {% else %}
+                                        <td sy>{{ ticket.technicien }}</td>
+                                        {% endif %}
+                                        <td>{{ ticket.clients }}</td>
+                                        <td>{{ ticket.lieu }}</td>
+                                        <td>{{ ticket.date ? ticket.date|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td ><span class="badge bg-{{colorPriorité}}">{{ ticket.priorite }}</span></td>
+                                        
+                                    
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                  {% if ticket.technicien is null and ticket.etat == 1 %}
+                                                     <a href="{{ path('assigner_technicien', {'id': ticket.id}) }}" class="btn btn-primary ">Assigner</a>
+                                                    {% elseif ticket.etat == 0  %}  
+                                                        <a href="{{ path('valider_ticket', {'id': ticket.id}) }}" class="btn btn-success ">Valider</a>
+                                                        {% else %}
+                                                        <button type="button" class="btn" disabled>Assigner</button>
+
+                                                     {% endif %}
+                                                </div>
+                                              
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                {% else %}
+                                 <tr>
+                                <td colspan="7">aucun ticket </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+
+

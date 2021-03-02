@@ -1,0 +1,20 @@
+{{ form_start(form) }}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.titre) }}</div>
+            <div class="col-md-4"> {{ form_row(form.lieu) }}  </div>
+        </div>
+         <div class="row">
+            <div class="col-md-4"> {{ form_row(form.priorite) }}  </div>
+        </div>
+        {{ form_rest(form) }}
+        <div class="text-left ">
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-success">{{ button_label|default('Enregister') }}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{{ form_end(form) }}
